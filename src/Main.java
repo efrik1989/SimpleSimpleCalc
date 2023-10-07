@@ -1,11 +1,11 @@
 import java.io.*;
-import java.util.Scanner;
 
 public class Main {
-    static String filePath = "D:\\Edu\\SimpleSimpleCalc\\input.txt";
+    static String inputFilePath = "D:\\Edu\\SimpleSimpleCalc\\input.txt";
+    static String outputFilePath = "D:\\Edu\\SimpleSimpleCalc\\output.txt";
 
     public static void main(String[] args) throws IOException {
-        File file = new File(filePath);
+        File file = new File(inputFilePath);
         BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
 
         while (bufferedReader.ready()) {
@@ -14,9 +14,11 @@ public class Main {
 
         }
 
+        bufferedReader.close();
+
 
     }
-    public static void calc(String line) {
+    public static void calc(String line) throws IOException {
         String[] str = line.split("\\s");
 
         try {
@@ -43,13 +45,20 @@ public class Main {
             if (infinity.equals("Infinity")) {
                 throw new ArithmeticException();
             }
-            System.out.println(result);
+            writeToFile(infinity);
         }catch (NumberFormatException num) {
-            System.out.println("Error! Not number");
+            writeToFile("Error! Not number");
         }catch (IllegalStateException il) {
-            System.out.println(il.getMessage());
+            writeToFile(il.getMessage());
         }catch (ArithmeticException ar) {
-            System.out.println("Error! Division by zero");
+            writeToFile("Error! Division by zero");
         }
+    }
+
+    static void writeToFile(String str) throws IOException {
+        FileWriter fileWriter = new FileWriter(outputFilePath, true);
+        BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+        bufferedWriter.write(str + "\n");
+        bufferedWriter.close();
     }
 }
