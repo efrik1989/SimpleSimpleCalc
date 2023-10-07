@@ -1,15 +1,15 @@
+import java.io.*;
 import java.util.Scanner;
 
 public class Main {
+    static String filePath = "D:\\Edu\\SimpleSimpleCalc\\input.txt";
 
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+    public static void main(String[] args) throws IOException {
+        File file = new File(filePath);
+        BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
 
-        while (scanner.hasNext()) {
-            String line = scanner.nextLine();
-            if (line.isEmpty() || line.matches(".*exit.*")) {
-                break;
-            }
+        while (bufferedReader.ready()) {
+            String line = bufferedReader.readLine();
             calc(line);
 
         }
